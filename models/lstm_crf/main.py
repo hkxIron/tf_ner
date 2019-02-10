@@ -76,7 +76,8 @@ def model_fn(features, labels, mode, params):
     word_ids = vocab_words.lookup(words)
     glove = np.load(params['glove'])['embeddings']  # np.array
     variable = np.vstack([glove, [[0.]*params['dim']]])
-    variable = tf.Variable(variable, dtype=tf.float32, trainable=False)
+    variable = tf.Variable(variable, dtype=tf.float32, trainable=False) # 注意,trainable为false
+    #embeddings:[batch, word_sequence_length, embedding_size]
     embeddings = tf.nn.embedding_lookup(variable, word_ids)
     embeddings = tf.layers.dropout(embeddings, rate=dropout, training=training)
 
